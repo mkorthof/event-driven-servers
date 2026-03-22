@@ -23,3 +23,13 @@ spawnd/perl/pm_to_blib
 *.csr
 *.p12
 *.srl
+
+dist/
+tac-plus-ng*/
+*.tar.gz
+*.tar.xz
+*.buildinfo
+*.deb
+*.dsc
+*.changes
+*.orig.tar.gz
