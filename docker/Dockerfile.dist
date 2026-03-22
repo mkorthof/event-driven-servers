@@ -1,0 +1,20 @@
+ARG BASE_IMAGE="ubuntu:latest"
+# hadolint ignore=DL3006
+FROM ${BASE_IMAGE} AS build
+ARG DEBIAN_FRONTEND=noninteractive
+ARG DEBCONF_NOWARNINGS="yes"
+WORKDIR /build
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+# hadolint ignore=DL3008
+RUN apt-get update && \
+    apt-get --no-install-recommends -yq install \
+      build-essential \
+      devscripts \
+      debhelper \
+      dpkg-dev \
+      dh-make \
+      ca-certificates \
+      # minimal: git curl libpcre2-dev libssl-dev libldap-dev 
+      git curl clang make libc6-dev libssl-dev libcrypt-dev libcrypto++-dev libpam0g-dev libpcre2-dev libc-ares-dev libcurl4-openssl-dev zlib1g-dev libldap-dev libradcli-dev libfreeradius-dev libsctp-dev python3 \
+      perl libauthen-simple-radius-perl libcrypt-generatepassword-perl libgetopt-long-descriptive-perl libnet-frame-simple-perl libnet-frame-layer-ipv6-perl libnet-ip-perl libnet-rawip-perl libnet-write-perl && \
+    rm -rf /var/lib/apt/lists/*
