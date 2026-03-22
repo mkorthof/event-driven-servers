@@ -1,0 +1,5 @@
+tac-plus-ng (1.0-1) UNRELEASED; urgency=medium
+
+  * Initial release. (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- none <none@none>  Sun, 25 Jan 2026 00:10:31 +0100

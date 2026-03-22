@@ -1,0 +1,39 @@
+Source: tac-plus-ng
+Section: net
+Priority: optional
+Maintainer: nobody <nobody@unknown>
+Rules-Requires-Root: no
+Build-Depends:
+ debhelper-compat (= 13),
+ build-essential,
+ libpcre2-dev,
+ libssl-dev,
+ libldap2-dev
+Standards-Version: 4.7.2
+Homepage: https://projects.pro-bono-publico.de/event-driven-servers
+Vcs-Browser: https://github.com/MarcJHuber/event-driven-servers
+Vcs-Git: https://github.com/MarcJHuber/event-driven-servers.git
+
+Package: tac-plus-ng
+Architecture: any
+Depends:
+# ${shlibs:Depends},
+ ${misc:Depends},
+Description: tac_plus-ng is a TACACS+ daemon that supports RADIUS, too. It provides networking components like routers and switches with authentication, authorisation and accounting services.
+  This version is a major rewrite of the original public Cisco source code and is in turn largely based on tac_plus, which comes with the same distribution. Key features include:
+    - NAS specific device keys, prompts, enable passwords
+    - Rule-based permission assignment
+    - Flexible external back-ends for user profiles (e.g. via PERL scripts or C; LDAP (including ActiveDirectory), RADIUS and others are included)
+    - Connection multiplexing (multiple concurrent NAS clients per process)
+    - Session multiplexing (multiple concurrent sessions per connection, single-connection)
+    - Scalable, no limit on users, clients or servers.
+    - CLI context aware.
+    - Full support for both IPv4 and IPv6
+    - Implements and auto-detects HAProxy protocol 2.
+    - Supports TACACS+ over TLS1.3
+    - Compliant to RFC8907
+    - Supports Linux VRFs
+    - Supports (non-standard) SSH Public Key Authentication (see the Wiki for reference)
+    - Implements and auto-detects legacy RADIUS (UDP and TCP), RADSEC (TLS) and RADIUS/DTLS (with PAP, CHAP, MSCHAPv1 and MSCHAPv2 authentication).
+    - Supports RADIUS Downloadable ACLs.
+
