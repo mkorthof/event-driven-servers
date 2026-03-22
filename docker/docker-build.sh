@@ -12,7 +12,7 @@ if ! find dist/tac-plus-ng*.deb 2>/dev/null; then
 fi
 docker build \
   $ARGS \
-  --cache-from tacacs-plus-ng:latest \
-  --tag tacacs-plus-ng:latest \
+  --cache-from tacacs-plus-ng:build \
+  --tag tacacs-plus-ng:build \
   --file Dockerfile \
   .
