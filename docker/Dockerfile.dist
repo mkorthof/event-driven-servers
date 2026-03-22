@@ -14,7 +14,5 @@ RUN apt-get update && \
       dpkg-dev \
       dh-make \
       ca-certificates \
-      # minimal: git curl libpcre2-dev libssl-dev libldap-dev 
-      git curl clang make libc6-dev libssl-dev libcrypt-dev libcrypto++-dev libpam0g-dev libpcre2-dev libc-ares-dev libcurl4-openssl-dev zlib1g-dev libldap-dev libradcli-dev libfreeradius-dev libsctp-dev python3 \
-      perl libauthen-simple-radius-perl libcrypt-generatepassword-perl libgetopt-long-descriptive-perl libnet-frame-simple-perl libnet-frame-layer-ipv6-perl libnet-ip-perl libnet-rawip-perl libnet-write-perl && \
+      $(cat apt-prerequisites) && \
     rm -rf /var/lib/apt/lists/*

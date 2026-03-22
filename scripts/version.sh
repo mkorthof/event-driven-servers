@@ -4,7 +4,7 @@ DATE="$( date +%Y%m%d )"
 VERSION="$DATE"
 DEB_VERSION="$DATE"
 if [ -n "$CI" ]; then
-    if [ -n "$CI_COMMIT_SHORT_SHA" ]; then
+    if [ -n "$GITHUB_SHA" ]; then
         SHA="$( echo "$GITHUB_SHA" | cut -c1-7)"
     fi
     # gitlab

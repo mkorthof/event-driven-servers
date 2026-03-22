@@ -29,15 +29,20 @@ jobs:
             dpkg-dev \
             dh-make \
             ca-certificates \
-            git curl clang make libc6-dev libssl-dev libcrypt-dev libcrypto++-dev libpam0g-dev libpcre2-dev libc-ares-dev libcurl4-openssl-dev zlib1g-dev libldap-dev libradcli-dev libfreeradius-dev libsctp-dev python3 \
-            perl libauthen-simple-radius-perl libcrypt-generatepassword-perl libgetopt-long-descriptive-perl libnet-frame-simple-perl libnet-frame-layer-ipv6-perl libnet-ip-perl libnet-rawip-perl libnet-write-perl
-      - run: scripts/build.sh
-      - run: scripts/deb-pkg.sh
-      - uses: actions/upload-artifact@v4
+            $(cat docker/apt-prerequisites)
+      - run: ./build.sh
+        working-directory: ./scripts
+      - uses: actions/upload-artifact@v6
         with:
-          name: build-artifacts
+          name: build-artifacts-bin
           path: |
-            *.tar.gz
+            **/*.tar.gz
+          if-no-files-found: error
+      - run: scripts/deb-pkg.sh
+      - uses: actions/upload-artifact@v6
+        with:
+          name: build-artifacts-deb
+          path: |
             *.deb
           if-no-files-found: error
 
@@ -49,11 +54,14 @@ jobs:
       - uses: actions/checkout@v6
       - uses: actions/download-artifact@v8
         with:
+          name: build-artifacts-bin
           path: dist
-      #gh release create tac-plus-ng-${{ env.VERSION }} $(find ./dist -type f -printf '%p ') --notes-file - <<'#####'
-       #   . ./scripts/version.sh
+      - uses: actions/download-artifact@v8
+        with:
+          name: build-artifacts-deb
+          path: dist
       - run: |
-          gh release create --tag "$( echo "$GITHUB_SHA" | cut -c1-7)" $(find ./dist -type f -printf '%p ') --notes-file - <<'#####'
+          gh release create tac-plus-ng-${GITHUB_SHA::7} $(find ./dist -type f -printf '%p ') --notes-file - <<'#####'
           tac_plus-ng binaries and debian package
 
           #####
@@ -74,14 +82,14 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - uses: actions/checkout@v6
       - uses: actions/download-artifact@v8
         with:
-          path: dist
-      - run: ./docker-build.sh
-        working-directory: ./docker
+          name: build-artifacts-deb
+          path: ./docker/dist
       - run: |
-          . ../scripts/version.sh
-          docker tag tacacs-plus-ng:latest --tag ghcr.io/${{ github.repository }}:${{ env.VERSION }} --tag ghcr.io/${{ github.repository }}:latest
-          docker push ghcr.io/${{ github.repository }}:${{ env.VERSION }} 
+          ./docker-build.sh
+          docker tag tacacs-plus-ng:latest ghcr.io/${{ github.repository }}:${GITHUB_SHA::7}
+          docker tag tacacs-plus-ng:latest ghcr.io/${{ github.repository }}:latest
+          docker push ghcr.io/${{ github.repository }}:${GITHUB_SHA::7}
           docker push ghcr.io/${{ github.repository }}:latest
+        working-directory: ./docker

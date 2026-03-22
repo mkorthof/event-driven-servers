@@ -26,10 +26,13 @@ spawnd/perl/pm_to_blib
 
 dist/
 tac-plus-ng*/
-*.tar.gz
-*.tar.xz
+*.changes
+*.control
 *.buildinfo
 *.deb
 *.dsc
-*.changes
+*.equivs
+*.tar.gz
+*.tar.xz
 *.orig.tar.gz
+
