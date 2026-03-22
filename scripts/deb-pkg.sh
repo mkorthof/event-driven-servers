@@ -21,6 +21,7 @@ for i in *; do
 done
 cd "$TACPLUSNG_PKG_DIR" || exit 1
 # generate debian/* files
+rm -r debian
 make distclean
 LOGNAME=nobody dh_make -y -s --createorig
 # create .deb
